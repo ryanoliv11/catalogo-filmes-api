@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: filmecatalogo
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5433:5432"
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      DB_USERNAME: postgres
+      DB_PASSWORD: admin
+      TMDB_API_KEY: c8f955abf5a429c68bb3eacddffd4efa
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/filmecatalogo
+    depends_on:
+      - postgres
